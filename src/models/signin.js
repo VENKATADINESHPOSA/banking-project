@@ -1,3 +1,5 @@
+import send from "../api";
+
 const initialState = {
   userName: "",
   password: "",
@@ -11,8 +13,13 @@ const reducers = {
 };
 
 const effects = {
-  verifyLoginDetails: () => {
-    console.log("11111111111111111111111");
+  verifyLoginDetails: async (e, store) => {
+    const result = await send({
+      url: "/signin",
+      method: "post",
+      body: store.login,
+    });
+    return result;
   },
 };
 

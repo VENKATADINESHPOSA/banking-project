@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -30,8 +30,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Signin = (props) => {
+  const [showError, setShowError] = useState(false);
+
   const classes = useStyles();
-  const { userName, password, setField } = props;
+  const { userName, password, setField, verifyLoginDetails } = props;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await verifyLoginDetails();
+    if (Object.keys(result).length > 0) {
+      //redirect to accounts page.
+    } else {
+      setShowError(true);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -43,7 +55,7 @@ const Signin = (props) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -71,15 +83,17 @@ const Signin = (props) => {
             onChange={({ target: { value, id } }) => setField({ id, value })}
           />
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(e) => handleSubmit(e)}
           >
             Sign In
           </Button>
         </form>
+        {showError && <div style={{ color: "red" }}>Invalid Credentials</div>}
       </div>
     </Container>
   );
@@ -89,6 +103,9 @@ const mapStateToProps = (store) => ({
   userName: store.login.userName,
   password: store.login.password,
 });
-const mapDispatchToProps = (store) => ({ setField: store.login.setField });
+const mapDispatchToProps = (store) => ({
+  setField: store.login.setField,
+  verifyLoginDetails: store.login.verifyLoginDetails,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);
