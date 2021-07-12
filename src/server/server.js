@@ -4,7 +4,6 @@ import { createServer } from "miragejs";
 const makeServer = () => {
   let server = createServer({
     routes() {
-      this.timing = 10000;
       this.post("/signin", (_, request) => {
         const details = JSON.parse(request.requestBody);
         const data = loginDetails.find(

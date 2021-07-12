@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signin = (props) => {
   const [showError, setShowError] = useState(false);
-
+  let history = useHistory();
   const classes = useStyles();
   const { userName, password, setField, verifyLoginDetails } = props;
 
@@ -40,6 +41,7 @@ const Signin = (props) => {
     const result = await verifyLoginDetails();
     if (Object.keys(result).length > 0) {
       //redirect to accounts page.
+      history.push("/accounts");
     } else {
       setShowError(true);
     }
