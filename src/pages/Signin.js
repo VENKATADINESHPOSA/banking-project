@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Header from "../components/organisms/Header";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,56 +51,59 @@ const Signin = (props) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="userName"
-            label="Username"
-            name="userName"
-            autoComplete="userName"
-            autoFocus
-            value={userName}
-            onChange={({ target: { value, id } }) => setField({ id, value })}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={({ target: { value, id } }) => setField({ id, value })}
-          />
-          <Button
-            // type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={(e) => handleSubmit(e)}
-          >
-            Sign In
-          </Button>
-        </form>
-        {showError && <div style={{ color: "red" }}>Invalid Credentials</div>}
-      </div>
-    </Container>
+    <>
+      <Header userName={userName}/>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="userName"
+              label="Username"
+              name="userName"
+              autoComplete="userName"
+              autoFocus
+              value={userName}
+              onChange={({ target: { value, id } }) => setField({ id, value })}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={({ target: { value, id } }) => setField({ id, value })}
+            />
+            <Button
+              // type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Sign In
+            </Button>
+          </form>
+          {showError && <div style={{ color: "red" }}>Invalid Credentials</div>}
+        </div>
+      </Container>{" "}
+    </>
   );
 };
 
