@@ -1,7 +1,9 @@
-import login from "./signin";
+import signin from "./signin";
+import accounts from "./accounts";
 
 const models = {
-  login,
+  signin,
+  accounts,
 };
 
 export default models;

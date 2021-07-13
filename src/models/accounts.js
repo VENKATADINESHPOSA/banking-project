@@ -1,22 +1,20 @@
 import send from "../api";
 
 const initialState = {
-  userName: "",
-  password: "",
   id: "",
+  firstName: "",
+  lastName: "",
+  accounts: [],
 };
 
 const reducers = {
-  setField: (state, { id, value }) => ({
-    ...state,
-    [id]: value,
-  }),
+  setData: (state, data) => ({ ...state, ...data }),
 };
 
 const effects = {
-  verifyLoginDetails: async (e, store) => {
+  fetchAccountDetails: async (e, store) => {
     const result = await send({
-      url: "/signin",
+      url: "/accounts",
       method: "post",
       body: store.signin,
     });
@@ -24,10 +22,10 @@ const effects = {
   },
 };
 
-const signin = {
+const accounts = {
   state: initialState,
   reducers,
   effects,
 };
 
-export default signin;
+export default accounts;

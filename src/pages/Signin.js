@@ -39,7 +39,9 @@ const Signin = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await verifyLoginDetails();
+
     if (Object.keys(result).length > 0) {
+      setField({ id: "id", value: result.id });
       //redirect to accounts page.
       history.push("/accounts");
     } else {
@@ -102,12 +104,12 @@ const Signin = (props) => {
 };
 
 const mapStateToProps = (store) => ({
-  userName: store.login.userName,
-  password: store.login.password,
+  userName: store.signin.userName,
+  password: store.signin.password,
 });
 const mapDispatchToProps = (store) => ({
-  setField: store.login.setField,
-  verifyLoginDetails: store.login.verifyLoginDetails,
+  setField: store.signin.setField,
+  verifyLoginDetails: store.signin.verifyLoginDetails,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);
