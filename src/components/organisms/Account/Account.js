@@ -4,6 +4,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +27,7 @@ const Account = (props) => {
   console.log(props);
   const { accountId, number, type, balance } = props;
   const classes = useStyles();
+  let history = useHistory();
 
   return (
     <Card className={classes.root}>
@@ -43,7 +45,14 @@ const Account = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Transactions</Button>
+        <Button
+          size="small"
+          color="inherit"
+          variant="outlined"
+          onClick={() => history.push("/transactions")}
+        >
+          See Transactions
+        </Button>
       </CardActions>
     </Card>
   );

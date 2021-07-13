@@ -1,5 +1,6 @@
 import loginDetails from "../mock/login";
 import accounts from "../mock/accounts";
+// import transactions from "../mock/transactions";
 import { createServer } from "miragejs";
 
 const makeServer = () => {
@@ -19,6 +20,12 @@ const makeServer = () => {
         const data = accounts.find((account) => details.id === account.id);
         return data;
       });
+
+      // this.post("/transactions", (_, request) => {
+      //   const details = JSON.parse(request.requestBody);
+      //   const data = transactions.find((transaction) => details.id === account.id);
+      //   return data;
+      // });
     },
   });
   return server;

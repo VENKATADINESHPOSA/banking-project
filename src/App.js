@@ -14,7 +14,7 @@ const App = () => {
         <Route exact path="/accounts" component={Accounts} />
         <Route exact path="/newaccount" component={NewAccount} />
         <Route exact path="/transactions" component={Transactions} />
-        <Route exact path="/pagenotfound" component={PageNotFound} />
+        <Route component={PageNotFound} />
       </Switch>
     </BrowserRouter>
   );
