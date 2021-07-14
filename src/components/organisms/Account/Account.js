@@ -24,10 +24,16 @@ const useStyles = makeStyles({
 });
 
 const Account = (props) => {
-  console.log(props);
-  const { accountId, number, type, balance } = props;
+  const { accountId, number, type, balance, setField, transactions, id } =
+    props;
   const classes = useStyles();
   let history = useHistory();
+
+  const handleTransactionsButton = () => {
+    setField({ name: "transactionIds", value: transactions });
+    setField({ name: "id", value: id });
+    history.push("/transactions");
+  };
 
   return (
     <Card className={classes.root}>
@@ -49,7 +55,7 @@ const Account = (props) => {
           size="small"
           color="inherit"
           variant="outlined"
-          onClick={() => history.push("/transactions")}
+          onClick={() => handleTransactionsButton()}
         >
           See Transactions
         </Button>

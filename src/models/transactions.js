@@ -1,11 +1,13 @@
 import send from "../api";
 
 const initialState = {
+  id: "",
+  transactionIds: [],
   transactions: [],
 };
 
 const reducers = {
-  settransactions: (state, value) => ({ ...state, transactions: value }),
+  setField: (state, { name, value }) => ({ ...state, [name]: value }),
 };
 
 const effects = {
@@ -13,16 +15,16 @@ const effects = {
     const result = await send({
       url: "/transactions",
       method: "post",
-      body: store.accounts.accounts,
+      body: store.transactions,
     });
     return result;
   },
 };
 
-const accounts = {
+const transactions = {
   state: initialState,
   reducers,
   effects,
 };
 
-export default accounts;
+export default transactions;

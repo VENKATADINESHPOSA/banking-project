@@ -3,7 +3,15 @@ import { connect } from "react-redux";
 import Account from "../components/organisms/Account/Account";
 
 const Accounts = (props) => {
-  const { firstName, lastName, setData, accounts, fetchAccountDetails } = props;
+  const {
+    firstName,
+    lastName,
+    setData,
+    accounts,
+    fetchAccountDetails,
+    setField,
+    id,
+  } = props;
 
   useEffect(() => {
     const details = async () => {
@@ -15,7 +23,9 @@ const Accounts = (props) => {
   }, []);
 
   const prepareAccounts = () => {
-    return accounts.map((acc, i) => <Account {...acc} />);
+    return accounts.map((acc, i) => (
+      <Account {...acc} setField={setField} id={id} />
+    ));
   };
 
   return [
@@ -39,9 +49,11 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = ({
   accounts: { setData, fetchAccountDetails },
+  transactions: { setField },
 }) => ({
   setData,
   fetchAccountDetails,
+  setField,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
