@@ -15,7 +15,7 @@ const effects = {
     const result = await send({
       url: "/transactions",
       method: "post",
-      body: store.transactions,
+      body: sessionStorage.getItem("transactionIds"),
     });
     return result;
   },

@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { userName } = props;
+  const { firstName, lastName } = props;
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Welcome <strong>{userName}</strong>
+            Welcome <strong>{firstName} {lastName}</strong>
           </Typography>
           <Button
             className={classes.Button}

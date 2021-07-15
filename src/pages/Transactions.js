@@ -3,10 +3,16 @@ import { connect } from "react-redux";
 import Transaction from "../components/organisms/Transaction/Transaction";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
-
+import Header from "../components/organisms/Header/Header";
 
 const Transations = (props) => {
-  const { transactions, setField, fetchTransactionDetails } = props;
+  const {
+    transactions,
+    setField,
+    fetchTransactionDetails,
+    firstName,
+    lastName,
+  } = props;
   const history = useHistory();
 
   useEffect(() => {
@@ -26,21 +32,25 @@ const Transations = (props) => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Transactions Page</h1>
+      <Header firstName={firstName} lastName={lastName}/>
       {prepareTransactions()}
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => history.push("/accounts")}
-      >
-        Back to Accounts
-      </Button>
+      <div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => history.push("/accounts")}
+        >
+          Back to Accounts
+        </Button>
+      </div>
     </>
   );
 };
 
 const mapStateToProps = (store) => ({
   transactions: store.transactions.transactions,
+  firstName: store.accounts.firstName,
+  lastName: store.accounts.lastName,
 });
 
 const mapDispatchToProps = (store) => ({

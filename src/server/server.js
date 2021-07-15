@@ -22,8 +22,10 @@ const makeServer = () => {
       });
 
       this.post("/transactions", (_, request) => {
-        const {transactionIds, id} = JSON.parse(request.requestBody);
-        const data = transactions[id].filter((transaction) => transactionIds.includes(transaction.id));
+        const transactionIds = JSON.parse(request.requestBody);
+        const data = transactions[sessionStorage.getItem("id")].filter(
+          (transaction) => transactionIds.includes(transaction.id)
+        );
         return data;
       });
     },

@@ -4,7 +4,15 @@ import Account from "../components/organisms/Account/Account";
 import Header from "../components/organisms/Header/Header";
 
 const Accounts = (props) => {
-  const { setData, accounts, fetchAccountDetails, setField, id } = props;
+  const {
+    setData,
+    accounts,
+    fetchAccountDetails,
+    setField,
+    id,
+    firstName,
+    lastName,
+  } = props;
 
   useEffect(() => {
     const details = async () => {
@@ -25,7 +33,7 @@ const Accounts = (props) => {
 
   return (
     <>
-      <Header />
+      <Header firstName={firstName} lastName={lastName} />
       {prepareAccounts()}
     </>
   );

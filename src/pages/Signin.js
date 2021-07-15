@@ -35,7 +35,8 @@ const Signin = (props) => {
   const [showError, setShowError] = useState(false);
   const classes = useStyles();
   let history = useHistory();
-  const { userName, password, setField, verifyLoginDetails, setStoredId } = props;
+  const { userName, password, setField, verifyLoginDetails, setStoredId } =
+    props;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

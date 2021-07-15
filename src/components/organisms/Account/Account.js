@@ -32,6 +32,7 @@ const Account = (props) => {
   const handleTransactionsButton = () => {
     setField({ name: "transactionIds", value: transactions });
     setField({ name: "id", value: id });
+    sessionStorage.setItem("transactionIds",JSON.stringify(transactions))
     history.push("/transactions");
   };
 
