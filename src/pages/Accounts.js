@@ -1,40 +1,34 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import Account from "../components/organisms/Account/Account";
+import Header from "../components/organisms/Header/Header";
 
 const Accounts = (props) => {
-  const {
-    firstName,
-    lastName,
-    setData,
-    accounts,
-    fetchAccountDetails,
-    setField,
-    id,
-  } = props;
+  const { setData, accounts, fetchAccountDetails, setField, id } = props;
 
   useEffect(() => {
     const details = async () => {
       const result = await fetchAccountDetails();
       setData(result);
     };
-    details();
+    if (accounts.length === 0) {
+      details();
+    }
     // eslint-disable-next-line
   }, []);
 
   const prepareAccounts = () => {
-    return accounts.map((acc, i) => (
-      <Account {...acc} setField={setField} id={id} />
+    return accounts.map((acc) => (
+      <Account key={acc.accountId} {...acc} setField={setField} id={id} />
     ));
   };
 
-  return [
-    <div>
-      <p>FirstName: {firstName}</p>
-      <p>LastName: {lastName}</p>
-    </div>,
-    prepareAccounts(),
-  ];
+  return (
+    <>
+      <Header />
+      {prepareAccounts()}
+    </>
+  );
 };
 
 const mapStateToProps = ({

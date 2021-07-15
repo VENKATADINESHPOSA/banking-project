@@ -16,7 +16,7 @@ const effects = {
     const result = await send({
       url: "/accounts",
       method: "post",
-      body: store.signin,
+      body: { id: sessionStorage.getItem("id") },
     });
     return result;
   },

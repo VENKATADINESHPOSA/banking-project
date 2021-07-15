@@ -35,7 +35,7 @@ const Signin = (props) => {
   const [showError, setShowError] = useState(false);
   const classes = useStyles();
   let history = useHistory();
-  const { userName, password, setField, verifyLoginDetails } = props;
+  const { userName, password, setField, verifyLoginDetails, setStoredId } = props;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +43,8 @@ const Signin = (props) => {
 
     if (Object.keys(result).length > 0) {
       setField({ id: "id", value: result.id });
+      sessionStorage.setItem("id", result.id);
+      setStoredId(result.id);
       //redirect to accounts page.
       history.push("/accounts");
     } else {

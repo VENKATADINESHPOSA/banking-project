@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import Transaction from "../components/organisms/Transaction/Transaction";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router";
+
 
 const Transations = (props) => {
   const { transactions, setField, fetchTransactionDetails } = props;
+  const history = useHistory();
 
   useEffect(() => {
     const transactionDetails = async () => {
       const data = await fetchTransactionDetails();
-      console.log(data);
       setField({ name: "transactions", value: data });
     };
     transactionDetails();
@@ -16,13 +19,22 @@ const Transations = (props) => {
   }, []);
 
   const prepareTransactions = () => {
-    return transactions.map((transaction) => <Transaction {...transaction} />);
+    return transactions.map((transaction) => (
+      <Transaction {...transaction} key={transaction.id} />
+    ));
   };
 
   return (
     <>
       <h1 style={{ textAlign: "center" }}>Transactions Page</h1>
       {prepareTransactions()}
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => history.push("/accounts")}
+      >
+        Back to Accounts
+      </Button>
     </>
   );
 };

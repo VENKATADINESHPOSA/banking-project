@@ -4,16 +4,47 @@ import Accounts from "./pages/Accounts";
 import Transactions from "./pages/Transactions";
 import NewAccount from "./pages/NewAccount";
 import PageNotFound from "./pages/PageNotFound";
+import RestrictedRoute from "./hoc/RestrictedRoute";
+import { useState } from "react";
 
 const App = () => {
+  let initialVal = "";
+  const storedIddd = sessionStorage.getItem("id");
+
+  if (storedIddd) {
+    initialVal = storedIddd;
+  }
+
+  const [storedId, setStoredId] = useState(initialVal);
+
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/accounts" component={Accounts} />
-        <Route exact path="/newaccount" component={NewAccount} />
-        <Route exact path="/transactions" component={Transactions} />
+        <Route
+          exact
+          path="/"
+          render={(props) => <SignIn {...props} setStoredId={setStoredId} />}
+        />
+        <Route
+          exact
+          path="/signin"
+          render={(props) => <SignIn {...props} setStoredId={setStoredId} />}
+        />
+        <RestrictedRoute
+          component={Accounts}
+          path="/accounts"
+          isLoggedIn={storedId}
+        />
+        <RestrictedRoute
+          component={Transactions}
+          path="/transactions"
+          isLoggedIn={storedId}
+        />
+        <RestrictedRoute
+          component={NewAccount}
+          path="/newAccount"
+          isLoggedIn={storedId}
+        />
         <Route component={PageNotFound} />
       </Switch>
     </BrowserRouter>

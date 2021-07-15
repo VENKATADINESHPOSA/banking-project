@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const { userName } = props;
 
   return (
@@ -28,7 +30,12 @@ const Header = (props) => {
           <Typography variant="h6" className={classes.title}>
             Welcome <strong>{userName}</strong>
           </Typography>
-          <Button className={classes.Button} color="inherit" variant="outlined">
+          <Button
+            className={classes.Button}
+            color="inherit"
+            variant="outlined"
+            onClick={() => history.push("/newaccount")}
+          >
             Add Account
           </Button>
           <Button color="inherit" variant="outlined">
