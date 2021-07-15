@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import Transaction from "../components/organisms/Transaction/Transaction";
-import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router";
 import Header from "../components/organisms/Header/Header";
+import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
 
 const Transations = (props) => {
   const {
@@ -13,7 +12,6 @@ const Transations = (props) => {
     firstName,
     lastName,
   } = props;
-  const history = useHistory();
 
   useEffect(() => {
     const transactionDetails = async () => {
@@ -32,17 +30,9 @@ const Transations = (props) => {
 
   return (
     <>
-      <Header firstName={firstName} lastName={lastName}/>
+      <Header firstName={firstName} lastName={lastName} />
+      <BreadCrumb link="transactions" />
       {prepareTransactions()}
-      <div>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => history.push("/accounts")}
-        >
-          Back to Accounts
-        </Button>
-      </div>
     </>
   );
 };

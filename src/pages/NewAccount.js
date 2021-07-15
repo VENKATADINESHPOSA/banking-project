@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
+import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,99 +31,108 @@ const NewAccount = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = (e) => {
     setData({
       accounts: [
         ...accounts,
         { accountId, type, number, date, balance, transactions: [] },
       ],
     });
+    history.push("/accounts");
   };
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <h1 style={{ textAlign: "center" }}>Account addition form</h1>
-      <TextField
-        value={firstName}
-        id="outlined-basic"
-        label="First Name"
-        variant="outlined"
-        onChange={({ target: { value } }) =>
-          setField({ name: "firstName", value })
-        }
-      />
-      <br />
-      <TextField
-        value={lastName}
-        id="outlined-basic"
-        label="Last Name"
-        variant="outlined"
-        onChange={({ target: { value } }) =>
-          setField({ name: "lastName", value })
-        }
-      />
-      <br />
-      <TextField
-        value={type}
-        id="outlined-basic"
-        label="Account Type"
-        variant="outlined"
-        onChange={({ target: { value } }) => setField({ name: "type", value })}
-      />
-      <br />
-      <TextField
-        id="outlined-basic"
-        value={number}
-        label="Account Number"
-        variant="outlined"
-        onChange={({ target: { value } }) =>
-          setField({ name: "number", value })
-        }
-      />
-      <br />
-      <TextField
-        value={accountId}
-        id="outlined-basic"
-        label="AccountId"
-        variant="outlined"
-        onChange={({ target: { value } }) =>
-          setField({ name: "accountId", value })
-        }
-      />
-      <br />
-      <TextField
-        value={date}
-        id="outlined-basic"
-        label="Date"
-        variant="outlined"
-        onChange={({ target: { value } }) => setField({ name: "date", value })}
-      />
-      <br />
-      <TextField
-        value={balance}
-        id="outlined-basic"
-        label="Balance"
-        variant="outlined"
-        onChange={({ target: { value } }) =>
-          setField({ name: "balance", value })
-        }
-      />
-      <br />
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => handleSubmitForm()}
-      >
-        Create Account
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => history.push("/accounts")}
-      >
-        Back to Accounts
-      </Button>
-    </form>
+    <>
+      <BreadCrumb link="New Account" />
+      <form className={classes.root} autoComplete="off">
+        <h1 style={{ textAlign: "center" }}>Account addition form</h1>
+        <TextField
+          value={firstName}
+          id="outlined-basic"
+          required
+          label="First Name"
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "firstName", value })
+          }
+        />
+        <br />
+        <TextField
+          value={lastName}
+          required
+          id="outlined-basic"
+          label="Last Name"
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "lastName", value })
+          }
+        />
+        <br />
+        <TextField
+          value={type}
+          id="outlined-basic"
+          required
+          label="Account Type"
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "type", value })
+          }
+        />
+        <br />
+        <TextField
+          id="outlined-basic"
+          value={number}
+          label="Account Number"
+          required
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "number", value })
+          }
+        />
+        <br />
+        <TextField
+          value={accountId}
+          id="outlined-basic"
+          label="AccountId"
+          required
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "accountId", value })
+          }
+        />
+        <br />
+        <TextField
+          value={date}
+          id="outlined-basic"
+          label="Date"
+          required
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "date", value })
+          }
+        />
+        <br />
+        <TextField
+          value={balance}
+          id="outlined-basic"
+          label="Balance"
+          required
+          variant="outlined"
+          onChange={({ target: { value } }) =>
+            setField({ name: "balance", value })
+          }
+        />
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          onClick={(e) => handleSubmitForm(e)}
+        >
+          Create Account
+        </Button>
+      </form>
+    </>
   );
 };
 

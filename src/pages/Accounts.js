@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import Account from "../components/organisms/Account/Account";
+import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
 import Header from "../components/organisms/Header/Header";
 
 const Accounts = (props) => {
@@ -34,6 +35,7 @@ const Accounts = (props) => {
   return (
     <>
       <Header firstName={firstName} lastName={lastName} />
+      <BreadCrumb link=""/>
       {prepareAccounts()}
     </>
   );
