@@ -13,6 +13,7 @@ const reducers = {
     ...state,
     [name]: value,
   }),
+  resetField: () => ({ ...initialState }),
 };
 
 const newAccount = {

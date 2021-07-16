@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -21,13 +22,23 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const history1 = useHistory();
-  const { firstName, lastName } = props;
+  const {
+    firstName,
+    lastName,
+    resetAccounts,
+    resetSignin,
+    resettransactions,
+    resetnewAccount,
+  } = props;
 
   const handleLogout = () => {
     sessionStorage.removeItem("id");
     sessionStorage.removeItem("transactionIds");
-    history1.push("/");
+    resetAccounts();
+    resetSignin();
+    resettransactions();
+    resetnewAccount();
+    history.push("/");
   };
 
   return (
@@ -61,4 +72,11 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  resetSignin: dispatch.signin.resetField,
+  resetAccounts: dispatch.accounts.resetData,
+  resettransactions: dispatch.transactions.resetField,
+  resetnewAccount: dispatch.newAccount.resetField,
+});
+
+export default connect(null, mapDispatchToProps)(Header);

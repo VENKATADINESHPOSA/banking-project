@@ -11,6 +11,7 @@ const reducers = {
     ...state,
     [id]: value,
   }),
+  resetField: () => ({ ...initialState }),
 };
 
 const effects = {

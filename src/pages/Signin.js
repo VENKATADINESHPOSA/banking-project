@@ -32,14 +32,27 @@ const useStyles = makeStyles((theme) => ({
 
 const Signin = (props) => {
   const [showError, setShowError] = useState(false);
+  const [showUserNameValidations, setShowUserNameValidations] = useState(false);
+  const [showPasswordErrorValidations, setShowPasswordErrorValidations] =
+    useState(false);
+
   const classes = useStyles();
   let history = useHistory();
   const { userName, password, setField, verifyLoginDetails, setStoredId } =
     props;
 
   const handleSubmit = async (e) => {
+    setShowUserNameValidations(true);
+    setShowPasswordErrorValidations(true);
+
     e.preventDefault();
     const result = await verifyLoginDetails();
+    // if (userName.length === 0) {
+    //   setShowUserNameError(true);
+    // }
+    // if (password.length === 0) {
+    //   setshowPasswordError(true);
+    // }
 
     if (Object.keys(result).length > 0) {
       setField({ id: "id", value: result.id });
@@ -75,8 +88,14 @@ const Signin = (props) => {
               autoComplete="userName"
               autoFocus
               value={userName}
-              onChange={({ target: { value, id } }) => setField({ id, value })}
+              onChange={({ target: { value, id } }) => {
+                setShowUserNameValidations(true);
+                setField({ id, value });
+              }}
             />
+            {showUserNameValidations && userName.length === 0 && (
+              <div style={{ color: "red" }}>Please enter username</div>
+            )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -88,10 +107,16 @@ const Signin = (props) => {
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={({ target: { value, id } }) => setField({ id, value })}
+              onChange={({ target: { value, id } }) => {
+                setShowPasswordErrorValidations(true);
+                setField({ id, value });
+              }}
             />
+            {showPasswordErrorValidations && password.length === 0 && (
+              <div style={{ color: "red" }}>Please enter password</div>
+            )}
             <Button
-              // type="submit"
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"

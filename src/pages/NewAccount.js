@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
+import Header from "../components/organisms/Header/Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NewAccount = (props) => {
   const {
+    fName,
+    lName,
     firstName,
     lastName,
     accountId,
@@ -43,6 +46,7 @@ const NewAccount = (props) => {
 
   return (
     <>
+      <Header firstName={fName} lastName={lName} />
       <BreadCrumb link="New Account" />
       <form className={classes.root} autoComplete="off">
         <h1 style={{ textAlign: "center" }}>Account addition form</h1>
@@ -137,6 +141,8 @@ const NewAccount = (props) => {
 };
 
 const mapSateToProps = (store) => ({
+  fName: store.accounts.firstName,
+  lName: store.accounts.lastName,
   firstName: store.newAccount.firstName,
   lastName: store.newAccount.lastName,
   id: store.accounts.id,

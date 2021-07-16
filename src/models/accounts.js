@@ -9,6 +9,7 @@ const initialState = {
 
 const reducers = {
   setData: (state, data) => ({ ...state, ...data }),
+  resetData: () => ({ ...initialState }),
 };
 
 const effects = {

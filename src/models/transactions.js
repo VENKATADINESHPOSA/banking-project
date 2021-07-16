@@ -8,6 +8,7 @@ const initialState = {
 
 const reducers = {
   setField: (state, { name, value }) => ({ ...state, [name]: value }),
+  resetField: () => ({ ...initialState }),
 };
 
 const effects = {
