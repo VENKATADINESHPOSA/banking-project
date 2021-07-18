@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +71,15 @@ const Header = (props) => {
       </AppBar>
     </div>
   );
+};
+
+Header.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  resetAccounts: PropTypes.func,
+  resetSignin: PropTypes.func,
+  resettransactions: PropTypes.func,
+  resetnewAccount: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({

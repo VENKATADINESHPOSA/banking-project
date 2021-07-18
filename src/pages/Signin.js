@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,12 +48,6 @@ const Signin = (props) => {
 
     e.preventDefault();
     const result = await verifyLoginDetails();
-    // if (userName.length === 0) {
-    //   setShowUserNameError(true);
-    // }
-    // if (password.length === 0) {
-    //   setshowPasswordError(true);
-    // }
 
     if (Object.keys(result).length > 0) {
       setField({ id: "id", value: result.id });
@@ -83,12 +78,16 @@ const Signin = (props) => {
               required
               fullWidth
               id="userName"
-              label="Username"
+              label="Username(alphanumeric)"
               name="userName"
               autoComplete="userName"
               autoFocus
               value={userName}
               onChange={({ target: { value, id } }) => {
+                const regex = /[^\w]|_/g;
+                if (regex.test(value)) {
+                  return;
+                }
                 setShowUserNameValidations(true);
                 setField({ id, value });
               }}
@@ -96,6 +95,7 @@ const Signin = (props) => {
             {showUserNameValidations && userName.length === 0 && (
               <div style={{ color: "red" }}>Please enter username</div>
             )}
+
             <TextField
               variant="outlined"
               margin="normal"
@@ -131,6 +131,14 @@ const Signin = (props) => {
       </Container>{" "}
     </>
   );
+};
+
+Signin.propTypes = {
+  userName: PropTypes.string,
+  password: PropTypes.string,
+  setField: PropTypes.func,
+  verifyLoginDetails: PropTypes.func,
+  setStoredId: PropTypes.func,
 };
 
 const mapStateToProps = (store) => ({

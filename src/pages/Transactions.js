@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import Transaction from "../components/organisms/Transaction/Transaction";
 import Header from "../components/organisms/Header/Header";
 import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
+import ContextStorage from "../context/contextStorage";
+import PropTypes from "prop-types";
 
 const Transations = (props) => {
   const {
@@ -13,9 +15,11 @@ const Transations = (props) => {
     lastName,
   } = props;
 
+  const { transactionIds } = useContext(ContextStorage);
+
   useEffect(() => {
     const transactionDetails = async () => {
-      const data = await fetchTransactionDetails();
+      const data = await fetchTransactionDetails(transactionIds);
       setField({ name: "transactions", value: data });
     };
     transactionDetails();
@@ -35,6 +39,14 @@ const Transations = (props) => {
       {prepareTransactions()}
     </>
   );
+};
+
+Transations.propTypes = {
+  transactions: PropTypes.array,
+  setField: PropTypes.func,
+  fetchTransactionDetails: PropTypes.func,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
 };
 
 const mapStateToProps = (store) => ({

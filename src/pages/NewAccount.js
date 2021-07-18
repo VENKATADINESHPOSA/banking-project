@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable no-useless-escape */
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -6,6 +7,7 @@ import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
 import Header from "../components/organisms/Header/Header";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +35,36 @@ const NewAccount = (props) => {
   } = props;
   const classes = useStyles();
   const history = useHistory();
+  const [showFirstNameValidationError, setFirstNameShowValidationError] =
+    useState(false);
+  const [showlastNameValidationError, setLastNameShowValidationError] =
+    useState(false);
+  const [showAccountTypeValidationError, setShowAccountTypeValidationError] =
+    useState(false);
+  const [
+    showAccountNumberValidationError,
+    setShowAccountNumberValidationError,
+  ] = useState(false);
+  const [showAccountIdValidationError, setShowAccountIdValidationError] =
+    useState(false);
+  const [showDateValidationError, setShowDateValidationError] = useState(false);
+  const [
+    showAccountBalanceValidationError,
+    setShowAccountBalanceValidationError,
+  ] = useState(false);
 
   const handleSubmitForm = (e) => {
+    if (
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      type.length === 0 ||
+      number.length === 0 ||
+      accountId.length === 0 ||
+      date.length === 0 ||
+      balance.length === 0
+    ) {
+      return;
+    }
     setData({
       accounts: [
         ...accounts,
@@ -56,10 +86,18 @@ const NewAccount = (props) => {
           required
           label="First Name"
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "firstName", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[0-9_\-\.\@]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setFirstNameShowValidationError(true);
+            setField({ name: "firstName", value });
+          }}
         />
+        {showFirstNameValidationError && firstName.length === 0 && (
+          <div style={{ color: "red" }}>Please enter firstName</div>
+        )}
         <br />
         <TextField
           value={lastName}
@@ -67,10 +105,18 @@ const NewAccount = (props) => {
           id="outlined-basic"
           label="Last Name"
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "lastName", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[0-9_\-\.\@]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setLastNameShowValidationError(true);
+            setField({ name: "lastName", value });
+          }}
         />
+        {showlastNameValidationError && lastName.length === 0 && (
+          <div style={{ color: "red" }}>Please enter lastName</div>
+        )}
         <br />
         <TextField
           value={type}
@@ -78,10 +124,18 @@ const NewAccount = (props) => {
           required
           label="Account Type"
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "type", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[0-9_\-\.\@]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setShowAccountTypeValidationError(true);
+            setField({ name: "type", value });
+          }}
         />
+        {showAccountTypeValidationError && type.length === 0 && (
+          <div style={{ color: "red" }}>Please enter Account Type.</div>
+        )}
         <br />
         <TextField
           id="outlined-basic"
@@ -89,10 +143,18 @@ const NewAccount = (props) => {
           label="Account Number"
           required
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "number", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[a-zA-Z\.\@\-]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setShowAccountNumberValidationError(true);
+            setField({ name: "number", value });
+          }}
         />
+        {showAccountNumberValidationError && number.length === 0 && (
+          <div style={{ color: "red" }}>Please enter Account Number.</div>
+        )}
         <br />
         <TextField
           value={accountId}
@@ -100,10 +162,18 @@ const NewAccount = (props) => {
           label="AccountId"
           required
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "accountId", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[^\w]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setShowAccountIdValidationError(true);
+            setField({ name: "accountId", value });
+          }}
         />
+        {showAccountIdValidationError && accountId.length === 0 && (
+          <div style={{ color: "red" }}>Please enter Account Id.</div>
+        )}
         <br />
         <TextField
           value={date}
@@ -111,10 +181,21 @@ const NewAccount = (props) => {
           label="Date"
           required
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "date", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /^\d{2}([./-])\d{2}\1\d{4}$/g;
+            if (value.length < 10) {
+            }
+            if (value.match(regex)) {
+              console.log(value);
+              return;
+            }
+            setShowDateValidationError(true);
+            setField({ name: "date", value });
+          }}
         />
+        {showDateValidationError && date.length === 0 && (
+          <div style={{ color: "red" }}>Please enter date.</div>
+        )}
         <br />
         <TextField
           value={balance}
@@ -122,10 +203,18 @@ const NewAccount = (props) => {
           label="Balance"
           required
           variant="outlined"
-          onChange={({ target: { value } }) =>
-            setField({ name: "balance", value })
-          }
+          onChange={({ target: { value } }) => {
+            const regex = /[a-zA-Z\.\@\-]|_/g;
+            if (regex.test(value)) {
+              return;
+            }
+            setShowAccountBalanceValidationError(true);
+            setField({ name: "balance", value });
+          }}
         />
+        {showAccountBalanceValidationError && balance.length === 0 && (
+          <div style={{ color: "red" }}>Please enter Account balance.</div>
+        )}
         <br />
         <Button
           type="submit"
@@ -138,6 +227,21 @@ const NewAccount = (props) => {
       </form>
     </>
   );
+};
+
+NewAccount.propTypes = {
+  fName: PropTypes.string,
+  lName: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  accountId: PropTypes.string,
+  type: PropTypes.string,
+  number: PropTypes.string,
+  date: PropTypes.string,
+  balance: PropTypes.string,
+  setField: PropTypes.func,
+  setData: PropTypes.func,
+  accounts: PropTypes.array,
 };
 
 const mapSateToProps = (store) => ({

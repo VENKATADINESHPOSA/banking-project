@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import Account from "../components/organisms/Account/Account";
 import BreadCrumb from "../components/organisms/BreadCrumbs/BreadCrumbs";
 import Header from "../components/organisms/Header/Header";
+import ContextStorage from "../context/contextStorage";
+import PropTypes from "prop-types";
 
 const Accounts = (props) => {
   const {
@@ -10,14 +12,15 @@ const Accounts = (props) => {
     accounts,
     fetchAccountDetails,
     setField,
-    id,
     firstName,
     lastName,
   } = props;
 
+  const { id } = useContext(ContextStorage);
+
   useEffect(() => {
     const details = async () => {
-      const result = await fetchAccountDetails();
+      const result = await fetchAccountDetails(id);
       setData(result);
     };
     if (accounts.length === 0) {
@@ -35,17 +38,22 @@ const Accounts = (props) => {
   return (
     <>
       <Header firstName={firstName} lastName={lastName} />
-      <BreadCrumb link=""/>
+      <BreadCrumb link="" />
       {prepareAccounts()}
     </>
   );
 };
 
-const mapStateToProps = ({
-  signin: { id },
-  accounts: { firstName, lastName, accounts },
-}) => ({
-  id,
+Accounts.propTypes = {
+  setData: PropTypes.func,
+  accounts: PropTypes.array,
+  fetchAccountDetails: PropTypes.func,
+  setField: PropTypes.func,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+};
+
+const mapStateToProps = ({ accounts: { firstName, lastName, accounts } }) => ({
   firstName,
   lastName,
   accounts,

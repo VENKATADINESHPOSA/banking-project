@@ -12,11 +12,11 @@ const reducers = {
 };
 
 const effects = {
-  fetchTransactionDetails: async (e, store) => {
+  fetchTransactionDetails: async (transactionIds, store) => {
     const result = await send({
       url: "/transactions",
       method: "post",
-      body: sessionStorage.getItem("transactionIds"),
+      body: transactionIds,
     });
     return result;
   },
